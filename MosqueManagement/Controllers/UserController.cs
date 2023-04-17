@@ -151,6 +151,12 @@ namespace MosqueManagement.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
+            // Assert that the user is already signed in
+            Contract.Assert(HttpContext.Session.GetString("email") != null, "no user currently logged in");
+
+            // Invariant that the user is already signed in
+            Contract.Invariant(HttpContext.Session.GetString("email") != null, "no user currently logged in");
+
             HttpContext.Session.Clear();
             return RedirectToAction("Login", "User");
         }
